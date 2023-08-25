@@ -41,8 +41,8 @@ def analytics(file_data):
             if data["СвАдресЮЛ"]["АдресРФ"]["Город"]["НаимГород"] == target_city:
                 city = data["СвАдресЮЛ"]["АдресРФ"]
                 result = {
-                    "company_name": unit["full_name"],
-                    "code_okved": code,
+                    "name": unit["full_name"],
+                    "code": code,
                     "inn": unit["inn"],
                     "kpp": unit["kpp"],
                     "address": city

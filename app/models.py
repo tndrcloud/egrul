@@ -14,8 +14,8 @@ Base = declarative_base()
 class Company(Base):
     __tablename__ = "company"
 
-    id = Column(Integer, primary_key=True)
-    name = Column(String(100), unique=True)
+    id = Column(Integer, autoincrement=True)
+    name = Column(String(100), primary_key=True)
     code = Column(String, nullable=True)
     inn = Column(Integer, nullable=True)
     kpp = Column(Integer, nullable=True)
