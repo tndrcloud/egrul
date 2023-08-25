@@ -1,0 +1,38 @@
+version: '3.7'
+
+services:
+  postgresql:
+    container_name: postgres
+    image: postgres:15.2-alpine3.17
+    env_file:
+      - .env
+    volumes:
+      - /opt/docker/postgres/var/lib/postgresql:/var/lib/postgresql
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    ports:
+      - "5433:5433"
+    restart: always
+    networks:
+      - custom
+
+  app:
+    container_name: "app"
+    image: app
+    depends_on:
+      - postgresql
+    env_file:
+      - .env
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    networks:
+      - custom
+
+networks:
+  custom:
+    driver: bridge
+    

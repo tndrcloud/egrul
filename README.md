@@ -5,10 +5,8 @@
 <h2>Требования</h2>
 
 - python 3.11
-- fastapi
-- tortoise-orm
+- sqlalchemy
 - postgresql
-- uvicorn
 - docker
 
 Зависимости можно установить через: pip install -r requirements.txt 
@@ -30,18 +28,20 @@
     - sudo curl -L "https://github.com/docker/compose/releases/download/1.26.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
     - sudo chmod +x /usr/local/bin/docker-compose
 
-2. Создать файл .env в директории ./insurance_cost и заполнить переменные окружения, где: 
+2. Создать файл .env в директории ./egrul и заполнить переменные окружения, где: 
 
 - DB_USER={логин пользователя PostgreSQL}
 - DB_PASSWORD={пароль от пользователя PostgreSQL}
 - DB_NAME={название БД в PostgreSQL}
 - DB_PATH={путь для доступа к БД - postgresql://login:password@ip:port/dbname}
-- DB_PATH_TORTOISE={путь для Tortoise-ORM - asyncpg://login:password@ip:port/dbname}
 
-
-3. Запустить команду: docker-compose -f docker-compose-app.yaml up -d из директории ./insurance_cost
+3. Запустить команду: docker-compose -f docker-compose-app.yaml up -d из директории ./egrul
 
 <h2>Эксплуатация:</h2>
 
-1. GET /v1/load_rates_in_database - метод для загрузки данных по тарифам из JSON файла в БД (по умолчанию БД пустая)
-2. GET /v1/get_insurance_cost - метод для расчёта стоимости страховки
+1. После деплоя приложения оно автоматически добавит результат проверки архива в БД.
+2. Чтобы проверить другой архив, нужно добавить его в корневую директорию проекта и выполнить следующие команды:
+    - docker stop app
+    - docker rm app
+    - docker rmi app
+    - docker-compose -f docker-compose-app.yaml up -d
