@@ -8,6 +8,7 @@ env.read_envfile("../.env")
 class Settings:
     archive = "egrul.json.zip"
     unpack_files = 100
+    city = "ХАБАРОВСК"
 
 
 settings = Settings()

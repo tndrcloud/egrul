@@ -31,13 +31,14 @@ def analytics(file_data):
     for unit in file_data:
         code = None
         data = unit["data"]
+        target_city = settings.city
 
         if data.get("СвОКВЭД") and data["СвОКВЭД"].get("СвОКВЭДОсн"):
             if data["СвОКВЭД"]["СвОКВЭДОсн"]["КодОКВЭД"] == "62.01":
                 code = data["СвОКВЭД"]["СвОКВЭДОсн"]["КодОКВЭД"]
 
         if code and data["СвАдресЮЛ"].get("АдресРФ") and data["СвАдресЮЛ"]["АдресРФ"].get("Город"):
-            if data["СвАдресЮЛ"]["АдресРФ"]["Город"]["НаимГород"] == "ХАБАРОВСК":
+            if data["СвАдресЮЛ"]["АдресРФ"]["Город"]["НаимГород"] == target_city:
                 city = data["СвАдресЮЛ"]["АдресРФ"]
                 result = {
                     "company_name": unit["full_name"],
