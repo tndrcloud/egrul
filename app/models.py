@@ -16,10 +16,10 @@ class Company(Base):
 
     id = Column(Integer, primary_key=True)
     name = Column(String(100), unique=True)
-    code = Column(String)
-    inn = Column(Integer(10))
-    kpp = Column(Integer(9))
-    address = Column(JSON)
+    code = Column(String, nullable=True)
+    inn = Column(Integer, nullable=True)
+    kpp = Column(Integer, nullable=True)
+    address = Column(JSON, nullable=True)
 
 
 engine_db = create_engine(env.str("DB_PATH"))

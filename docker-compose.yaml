@@ -19,7 +19,7 @@ services:
       - custom
 
   app:
-    container_name: "app"
+    container_name: app_egrul
     image: app
     depends_on:
       - postgresql
