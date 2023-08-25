@@ -35,7 +35,9 @@
 - DB_NAME={название БД в PostgreSQL}
 - DB_PATH={путь для доступа к БД - postgresql://login:password@ip:port/dbname}
 
-3. Запустить команду: docker-compose -f docker-compose-app.yaml up -d из директории ./egrul
+3. Добавить архив в корневой каталог
+
+4. Запустить команду: docker-compose -f docker-compose-app.yaml up -d из директории ./egrul
 
 <h2>Эксплуатация:</h2>
 
