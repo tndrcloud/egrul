@@ -37,7 +37,7 @@
 
 3. Добавить архив в корневой каталог
 
-4. Запустить команду: docker-compose -f docker-compose-app.yaml up -d из директории ./egrul
+4. Запустить команду: docker-compose -f docker-compose.yaml up -d из директории ./egrul
 
 <h2>Эксплуатация:</h2>
 
@@ -52,4 +52,4 @@
     - docker stop app
     - docker rm app
     - docker rmi app
-    - docker-compose -f docker-compose-app.yaml up -d
+    - docker-compose -f docker-compose.yaml up -d
