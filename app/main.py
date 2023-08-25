@@ -43,8 +43,8 @@ def analytics(file_data):
                 result = {
                     "name": unit["full_name"],
                     "code": code,
-                    "inn": unit["inn"],
-                    "kpp": unit["kpp"],
+                    "inn": int(unit["inn"]),
+                    "kpp": int(unit["kpp"]),
                     "address": city
                 }
                 Operations.add_company(result)
