@@ -85,7 +85,6 @@ def analytics(file_data):
 def core():
     try:
         au = archive_unpacker(settings.UNPACK_FILES_COUNT)
-        
         while True:
             json_data = next(au)
             analytics(json_data)
