@@ -2,13 +2,18 @@ from envparse import Env
 
 
 env = Env()
-env.read_envfile("../.env")
+env.read_envfile(".env")
 
 
 class Settings:
-    archive = "egrul.json.zip"
-    unpack_files_count = 100
-    city = "ХАБАРОВСК"
+    DB_USER = env.str("DB_USER")
+    DB_PASSWORD = env.str("DB_PASSWORD")
+    DB_NAME = env.str("DB_NAME")
+    DB_PATH = env.str("DB_PATH")
+
+    ARCHIVE = "egrul.json.zip"
+    UNPACK_FILES_COUNT = 100
+    NAME_CITY = "ХАБАРОВСК"
 
 
 settings = Settings()

@@ -12,7 +12,7 @@ def files_partition(length, n):
 
 
 def archive_unpacker(part_length):
-    with ZipFile(f"../{settings.archive}", mode="r") as archive:
+    with ZipFile(f"../{settings.ARCHIVE}", mode="r") as archive:
         list_filenames = [filename for filename in archive.namelist()]
         new_list = list(files_partition(list_filenames, part_length))
 
@@ -61,7 +61,7 @@ def analytics(file_data):
     for unit in file_data:
         code = None
         data = unit["data"]
-        target_city = settings.city
+        target_city = settings.NAME_CITY
 
         if data.get("СвОКВЭД") and data["СвОКВЭД"].get("СвОКВЭДОсн"):
             if data["СвОКВЭД"]["СвОКВЭДОсн"]["КодОКВЭД"] == "62.01":
@@ -83,12 +83,13 @@ def analytics(file_data):
     
 
 def core():
-    au = archive_unpacker(settings.unpack_files_count)
-
     try:
+        au = archive_unpacker(settings.UNPACK_FILES_COUNT)
+        
         while True:
             json_data = next(au)
             analytics(json_data)
+
     except StopIteration:
         return
 

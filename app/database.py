@@ -13,5 +13,6 @@ class Operations:
                 session.execute(statement)
                 session.commit()
                 logger.info("add data succesfully")
+                
             except IntegrityError:
                 logger.info('pass duplicate')
