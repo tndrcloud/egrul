@@ -7,11 +7,15 @@ from settings import settings
 
 
 def files_partition(length, n):
+    """splits the general list of files into lists of a given length"""
+
     for i in range(0, len(length), n):
         yield length[i:i + n]
 
 
 def archive_unpacker(part_length):
+    """unpacks the archive and alternately gives the contents of the files to json"""
+
     with ZipFile(f"../{settings.ARCHIVE}", mode="r") as archive:
         list_filenames = [filename for filename in archive.namelist()]
         new_list = list(files_partition(list_filenames, part_length))
@@ -30,6 +34,8 @@ def archive_unpacker(part_length):
 
 
 def address_handler(address):
+    """converts address data to a string"""
+
     without_block = False
     if address.get('Корпус'):
         subaddr = address['Корпус']
@@ -58,6 +64,9 @@ def address_handler(address):
 
 
 def analytics(file_data):
+    """checks the parameters of the json data for compliance with the search, 
+    if successful, adds the data to the database"""
+    
     for unit in file_data:
         code = None
         data = unit["data"]

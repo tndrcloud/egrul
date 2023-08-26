@@ -6,6 +6,8 @@ from log import logger
 
 
 class Operations:
+    """class with database operations"""
+
     def add_company(data):
         with engine_db.connect() as session:
             try:

@@ -8,6 +8,8 @@ Base = declarative_base()
 
 
 class Company(Base):
+    """class for describing the SQLAlchemy ORM model"""
+
     __tablename__ = "company"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
