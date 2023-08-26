@@ -20,14 +20,24 @@ def archive_unpacker(part_length):
             archive.extractall(members=part)
             for filename in part:
                 with open(filename, encoding='utf-8') as file_json:
-                    logger.info(f"file {filename} open")
+                    logger.info(f"file {filename} unpacked and open")
+
                     file_data = json.load(file_json)
                     yield file_data
+
                 os.remove(filename)
                 logger.info(f"file {filename} removed")
 
 
 def address_handler(address):
+    without_block = False
+    if address.get('Корпус'):
+        subaddr = address['Корпус']
+    elif address.get('Кварт'):
+        subaddr = address['Кварт']
+    else:
+        without_block = True
+
     region = address['Регион']['НаимРегион']
     type_region = address['Регион']['ТипРегион']
     type_city = address['Город']['ТипГород']
@@ -37,21 +47,13 @@ def address_handler(address):
     apartment = address['Дом']
     index = address['Индекс']
 
-    without_block = False
-    if address.get('Корпус'):
-        block = address['Корпус']
-    elif address.get('Кварт'):
-        block = address['Кварт']
-    else:
-        without_block = True
-
     if without_block:
         result = f"""{region} {type_region}, {type_city} {city}, 
             {type_street} {street}, {apartment}, {index}"""
         return result
     
     result = f"""{region} {type_region}, {type_city} {city}, 
-        {type_street} {street}, {apartment}, {block}, {index}"""
+        {type_street} {street}, {apartment}, {subaddr}, {index}"""
     return result
 
 
@@ -78,20 +80,17 @@ def analytics(file_data):
                 }
                 Operations.add_company(result)
                 logger.info(f"company: {unit['full_name']} added to db")
-
+    
 
 def core():
-    result = []
     au = archive_unpacker(settings.unpack_files_count)
 
     try:
         while True:
             json_data = next(au)
-            analyst = analytics(json_data)
-            if analyst:
-                result.extend(analyst)
+            analytics(json_data)
     except StopIteration:
-        return result
+        return
 
 
 if __name__ == '__main__':
