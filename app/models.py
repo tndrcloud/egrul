@@ -20,7 +20,7 @@ class Company(Base):
     code = Column(String, nullable=False)
     inn = Column(BigInteger, nullable=False)
     kpp = Column(BigInteger, nullable=False)
-    address = Column(JSON, nullable=False)
+    address = Column(String, nullable=False)
 
 
 engine_db = create_engine(db_path)

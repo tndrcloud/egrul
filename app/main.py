@@ -27,6 +27,31 @@ def archive_unpacker(part_length):
                 logger.info(f"file {filename} removed")
 
 
+def address_handler(address):
+    region = address['Регион']['НаимРегион']
+    type_region = address['Регион']['ТипРегион']
+    type_city = address['Город']['ТипГород']
+    city = address['Город']['НаимГород']
+    type_street = address['Улица']['ТипУлица']
+    street = address['Улица']['НаимУлица']
+    apartment = address['Дом']
+    index = address['Индекс']
+
+    without_block = False
+    if address.get('Корпус'):
+        block = address['Корпус']
+    elif address.get('Кварт'):
+        block = address['Кварт']
+    else:
+        without_block = True
+
+    if without_block:
+        result = f"{region} {type_region}, {type_city} {city}, {type_street} {street}, {apartment}, {index}"
+        return result
+    result = f"{region} {type_region}, {type_city} {city}, {type_street} {street}, {apartment}, {block}, {index}"
+    return result
+
+
 def analytics(file_data):
     for unit in file_data:
         code = None
@@ -40,12 +65,13 @@ def analytics(file_data):
         if code and data["СвАдресЮЛ"].get("АдресРФ") and data["СвАдресЮЛ"]["АдресРФ"].get("Город"):
             if data["СвАдресЮЛ"]["АдресРФ"]["Город"]["НаимГород"] == target_city:
                 city = data["СвАдресЮЛ"]["АдресРФ"]
+                correct_address = address_handler(city)
                 result = {
                     "name": unit["full_name"],
                     "code": code,
                     "inn": int(unit["inn"]),
                     "kpp": int(unit["kpp"]),
-                    "address": city
+                    "address": correct_address
                 }
                 Operations.add_company(result)
                 logger.info(f"company: {unit['full_name']} added to db")
