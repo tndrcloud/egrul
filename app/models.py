@@ -1,12 +1,7 @@
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, BigInteger, String, JSON
+from sqlalchemy import Column, Integer, BigInteger, String
 from sqlalchemy import create_engine
-from envparse import Env
-
-
-env = Env()
-env.read_envfile('.env')
-db_path = env.str("DB_PATH")
+from settings import settings
 
 
 Base = declarative_base()
@@ -23,5 +18,5 @@ class Company(Base):
     address = Column(String, nullable=False)
 
 
-engine_db = create_engine(db_path)
+engine_db = create_engine(settings.DB_PATH)
 Base.metadata.create_all(engine_db)

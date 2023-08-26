@@ -67,19 +67,20 @@ def analytics(file_data):
             if data["СвОКВЭД"]["СвОКВЭДОсн"]["КодОКВЭД"] == "62.01":
                 code = data["СвОКВЭД"]["СвОКВЭДОсн"]["КодОКВЭД"]
 
-        if code and data["СвАдресЮЛ"].get("АдресРФ") and data["СвАдресЮЛ"]["АдресРФ"].get("Город"):
-            if data["СвАдресЮЛ"]["АдресРФ"]["Город"]["НаимГород"] == target_city:
-                city = data["СвАдресЮЛ"]["АдресРФ"]
-                correct_address = address_handler(city)
-                result = {
-                    "name": unit["full_name"],
-                    "code": code,
-                    "inn": int(unit["inn"]),
-                    "kpp": int(unit["kpp"]),
-                    "address": correct_address
-                }
-                Operations.add_company(result)
-                logger.info(f"company: {unit['full_name']} added to db")
+        if code: 
+            if data["СвАдресЮЛ"].get("АдресРФ") and data["СвАдресЮЛ"]["АдресРФ"].get("Город"):
+                if data["СвАдресЮЛ"]["АдресРФ"]["Город"]["НаимГород"] == target_city:
+                    city = data["СвАдресЮЛ"]["АдресРФ"]
+                    correct_address = address_handler(city)
+                    result = {
+                        "name": unit["full_name"],
+                        "code": code,
+                        "inn": int(unit["inn"]),
+                        "kpp": int(unit["kpp"]),
+                        "address": correct_address
+                    }
+                    Operations.add_company(result)
+                    logger.info(f"company: {unit['full_name']} added to db")
     
 
 def core():
