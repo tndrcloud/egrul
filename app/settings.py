@@ -7,7 +7,7 @@ env.read_envfile("../.env")
 
 class Settings:
     archive = "egrul.json.zip"
-    unpack_files = 100
+    unpack_files_count = 100
     city = "ХАБАРОВСК"
 
 

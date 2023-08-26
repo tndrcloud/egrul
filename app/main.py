@@ -46,9 +46,12 @@ def address_handler(address):
         without_block = True
 
     if without_block:
-        result = f"{region} {type_region}, {type_city} {city}, {type_street} {street}, {apartment}, {index}"
+        result = f"""{region} {type_region}, {type_city} {city}, 
+            {type_street} {street}, {apartment}, {index}"""
         return result
-    result = f"{region} {type_region}, {type_city} {city}, {type_street} {street}, {apartment}, {block}, {index}"
+    
+    result = f"""{region} {type_region}, {type_city} {city}, 
+        {type_street} {street}, {apartment}, {block}, {index}"""
     return result
 
 
@@ -79,7 +82,7 @@ def analytics(file_data):
 
 def core():
     result = []
-    au = archive_unpacker(settings.unpack_files)
+    au = archive_unpacker(settings.unpack_files_count)
 
     try:
         while True:
