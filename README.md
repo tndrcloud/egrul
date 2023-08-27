@@ -54,3 +54,7 @@
     - docker rm app
     - docker rmi app
     - docker-compose -f docker-compose.yaml up -d
+
+<h2>Примечания:</h2>
+
+Если разворачивать само приложение в контейнере не нужно, то можно убрать блок app из docker-compose.yaml и запускать через консоль.

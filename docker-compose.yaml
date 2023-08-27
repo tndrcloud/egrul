@@ -24,17 +24,13 @@ services:
       - custom
 
   app:
-    container_name: app_egrul
-    image: app
+    build: .
+    container_name: app
     depends_on:
       postgresql:
         condition: service_healthy
     env_file:
       - .env
-    build:
-      context: .
-      dockerfile: Dockerfile
-    restart: always
     networks:
       - custom
 
