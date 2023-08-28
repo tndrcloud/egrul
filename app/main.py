@@ -6,19 +6,14 @@ from database import Operations
 from settings import settings
 
 
-def files_partition(length, n):
-    """splits the general list of files into lists of a given length"""
-
-    for i in range(0, len(length), n):
-        yield length[i:i + n]
-
-
 def archive_unpacker(part_length):
     """unpacks the archive and alternately gives the contents of the files to json"""
 
     with ZipFile(f"../{settings.ARCHIVE}", mode="r") as archive:
-        list_filenames = [filename for filename in archive.namelist()]
-        new_list = list(files_partition(list_filenames, part_length))
+        filenames = [filename for filename in archive.namelist()]
+
+        partition = (filenames[i:i + part_length] for i in range(0, len(filenames), part_length))
+        new_list = list(partition)
 
         for part in new_list:
             archive.extractall(members=part)
@@ -33,33 +28,19 @@ def archive_unpacker(part_length):
                 logger.info(f"file {filename} removed")
 
 
-def address_handler(address):
+def address_handler(addr):
     """converts address data to a string"""
 
-    without_block = False
-    if address.get('Корпус'):
-        subaddr = address['Корпус']
-    elif address.get('Кварт'):
-        subaddr = address['Кварт']
+    if addr.get('Корпус'):
+        subaddr = ', ' + addr['Корпус']
+    elif addr.get('Кварт'):
+        subaddr = ',' + addr['Кварт']
     else:
-        without_block = True
+        subaddr = ''
 
-    region = address['Регион']['НаимРегион']
-    type_region = address['Регион']['ТипРегион']
-    type_city = address['Город']['ТипГород']
-    city = address['Город']['НаимГород']
-    type_street = address['Улица']['ТипУлица']
-    street = address['Улица']['НаимУлица']
-    apartment = address['Дом']
-    index = address['Индекс']
-
-    if without_block:
-        result = f"""{region} {type_region}, {type_city} {city}, 
-            {type_street} {street}, {apartment}, {index}"""
-        return result
-    
-    result = f"""{region} {type_region}, {type_city} {city}, 
-        {type_street} {street}, {apartment}, {subaddr}, {index}"""
+    result = f"""{addr['Регион']['НаимРегион']} {addr['Регион']['ТипРегион']}, 
+        {addr['Город']['ТипГород']} {addr['Город']['НаимГород']}, {addr['Улица']['ТипУлица']} 
+        {addr['Улица']['НаимУлица']}, {addr['Дом'] + subaddr}, {addr['Индекс']}"""
     return result
 
 
@@ -89,7 +70,6 @@ def analytics(file_data):
                         "address": correct_address
                     }
                     Operations.add_company(result)
-                    logger.info(f"company: {unit['full_name']} added to db")
     
 
 def core():
@@ -98,7 +78,6 @@ def core():
         while True:
             json_data = next(au)
             analytics(json_data)
-
     except StopIteration:
         return
 
@@ -106,4 +85,4 @@ def core():
 if __name__ == '__main__':
     logger.info("app is running...")
     core()
-    logger.info("app is finished!")
+    logger.info("done!")

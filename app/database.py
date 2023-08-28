@@ -14,7 +14,7 @@ class Operations:
                 statement = insert(Company).values(**data)
                 session.execute(statement)
                 session.commit()
-                logger.info("add data succesfully")
+                logger.info(f"{data} add succesfully")
                 
             except IntegrityError:
-                logger.info('pass duplicate')
+                logger.info(f"{data} pass duplicate")
