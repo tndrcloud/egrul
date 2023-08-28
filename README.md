@@ -28,7 +28,7 @@
     - sudo curl -L "https://github.com/docker/compose/releases/download/1.26.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
     - sudo chmod +x /usr/local/bin/docker-compose
 
-2. Создать файл .env в директории ./egrul и заполнить переменные окружения, где: 
+2. Создать файл .env в директории ./egrul по примеру (.env.example) и заполнить переменные окружения, где: 
 
 - DB_USER={логин пользователя PostgreSQL}
 - DB_PASSWORD={пароль от пользователя PostgreSQL}
