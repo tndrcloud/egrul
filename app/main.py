@@ -13,9 +13,8 @@ def archive_unpacker(part_length):
         filenames = [filename for filename in archive.namelist()]
 
         partition = (filenames[i:i + part_length] for i in range(0, len(filenames), part_length))
-        new_list = list(partition)
 
-        for part in new_list:
+        for part in list(partition):
             archive.extractall(members=part)
             for filename in part:
                 with open(filename, encoding='utf-8') as file_json:
@@ -34,7 +33,7 @@ def address_handler(addr):
     if addr.get('Корпус'):
         subaddr = ', ' + addr['Корпус']
     elif addr.get('Кварт'):
-        subaddr = ',' + addr['Кварт']
+        subaddr = ', ' + addr['Кварт']
     else:
         subaddr = ''
 
