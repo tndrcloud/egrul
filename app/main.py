@@ -48,17 +48,16 @@ def analytics(file_data):
     if successful, adds the data to the database"""
     
     for unit in file_data:
-        code = None
         data = unit["data"]
-        target_city = settings.NAME_CITY
+        code = None
 
         if data.get("СвОКВЭД") and data["СвОКВЭД"].get("СвОКВЭДОсн"):
-            if data["СвОКВЭД"]["СвОКВЭДОсн"]["КодОКВЭД"] == "62.01":
+            if data["СвОКВЭД"]["СвОКВЭДОсн"]["КодОКВЭД"] == settings.CODE:
                 code = data["СвОКВЭД"]["СвОКВЭДОсн"]["КодОКВЭД"]
 
         if code: 
             if data["СвАдресЮЛ"].get("АдресРФ") and data["СвАдресЮЛ"]["АдресРФ"].get("Город"):
-                if data["СвАдресЮЛ"]["АдресРФ"]["Город"]["НаимГород"] == target_city:
+                if data["СвАдресЮЛ"]["АдресРФ"]["Город"]["НаимГород"] == settings.NAME_CITY:
                     city = data["СвАдресЮЛ"]["АдресРФ"]
                     correct_address = address_handler(city)
                     result = {

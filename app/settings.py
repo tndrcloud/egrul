@@ -16,6 +16,7 @@ class Settings:
     ARCHIVE = "egrul.json.zip"
     UNPACK_FILES_COUNT = 100
     NAME_CITY = "ХАБАРОВСК"
+    CODE = "62.01"
 
 
 settings = Settings()
